@@ -1,0 +1,3 @@
+[submodule "matrix-react-sdk"]
+	path = matrix-react-sdk
+	url = https://github.com/friedger/matrix-react-sdk.git
