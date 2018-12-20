@@ -19,7 +19,7 @@ limitations under the License.
 import React from "react";
 import PropTypes from "prop-types";
 
-const DEFAULT_LOGO_URI = "themes/riot/img/logos/blockstack.svg";
+const DEFAULT_LOGO_URI = "themes/riot/img/logos/oichat.svg";
 
 module.exports = React.createClass({
     displayName: "BlockstackLoginHeader",
