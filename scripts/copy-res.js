@@ -54,6 +54,11 @@ const COPY_LIST = [
     ["res/home-status.html", "webapp"],
     ["res/home/**", "webapp/home"],
     ["res/vector-icons/**", "webapp/vector-icons"],
+    ["res/oichat-icons/**", "webapp/oichat-icons"],
+    ["res/*.png", "webapp"],
+    ["res/*.svg", "webapp"],
+    ["res/*.ico", "webapp"],
+    ["res/*.xml", "webapp"],
     ["node_modules/matrix-react-sdk/res/{fonts,img,themes,media}/**", "webapp"],
     ["res/themes/**", "webapp/themes"],
     ["node_modules/emojione/assets/svg/*", "webapp/emojione/svg/"],
@@ -64,6 +69,7 @@ const COPY_LIST = [
     ["node_modules/olm/olm.wasm", "webapp", { directwatch: 1 }],
     ["node_modules/olm/olm_legacy.js", "webapp", { directwatch: 1 }],
     ["./config.json", "webapp", { directwatch: 1 }],
+    ["res/_headers", "webapp"],
 ];
 
 INCLUDE_LANGS.forEach(function(l) {
