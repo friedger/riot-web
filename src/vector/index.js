@@ -228,6 +228,7 @@ async function loadApp() {
     let configError;
     try {
         configJson = await getVectorConfig();
+        console.log("config", configJson);
     } catch (e) {
         configError = e;
     }
