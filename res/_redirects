@@ -1,2 +1,1 @@
 # Redirect default Netlify subdomain to primary domain
-http://nifty-heyrovsky-5c2ab1.netlify.com/* http://chat.openintents.org/:splat 301!
