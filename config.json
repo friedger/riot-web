@@ -6,9 +6,9 @@
     "disable_login_language_selector": false,
     "disable_3pid_login": false,
     "brand": "OI Chat",
-    "integrations_ui_url": "",
-    "integrations_rest_url": "",
-    "integrations_jitsi_widget_url": "",
+    "integrations_ui_url": "https://scalar.vector.im/",
+    "integrations_rest_url": "https://scalar.vector.im/api",
+    "integrations_jitsi_widget_url": "https://scalar.vector.im/api/widgets/jitsi.html",
     "bug_report_endpoint_url": "https://riot.im/bugreports/submit",
     "features": {
         "feature_groups": "labs",
