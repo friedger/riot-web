@@ -2,23 +2,21 @@
 <html lang="en" style="height: 100%;">
   <head>
     <meta charset="utf-8">
-    <title>Riot</title>
-    <link rel="apple-touch-icon" sizes="57x57" href="vector-icons/apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="vector-icons/apple-touch-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="vector-icons/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="vector-icons/apple-touch-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="vector-icons/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="vector-icons/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="vector-icons/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="vector-icons/apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="vector-icons/apple-touch-icon-180x180.png">
-    <link rel="manifest" href="manifest.json">
-    <link rel="shortcut icon" href="vector-icons/favicon.ico">
-    <meta name="apple-mobile-web-app-title" content="Riot">
-    <meta name="application-name" content="Riot">
+    <title>OI Chat</title>
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">    
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="shortcut icon" href="/favicon.ico">
     <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="msapplication-TileImage" content="vector-icons/mstile-144x144.png">
-    <meta name="msapplication-config" content="vector-icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-title" content="OI Chat">
+    <meta name="application-name" content="OI Chat">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="msapplication-config" content="/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <meta property="og:image" content="<%= htmlWebpackPlugin.options.vars.og_image_url %>" />
     <% for (var i=0; i < htmlWebpackPlugin.files.css.length; i++) {
@@ -35,7 +33,7 @@
   </head>
   <body style="height: 100%;">
     <section id="matrixchat" style="height: 100%;"></section>
-    <noscript>Sorry, Riot requires JavaScript to be enabled.</noscript> <!-- TODO: Translate this? -->
+    <noscript>Sorry, OI Chat requires JavaScript to be enabled.</noscript> <!-- TODO: Translate this? -->
     <% for (var i=0; i < htmlWebpackPlugin.files.js.length; i++) {
         if (_.endsWith(htmlWebpackPlugin.files.js[i], 'olm.js')) {
             var array = htmlWebpackPlugin.files.js;
