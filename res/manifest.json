@@ -1,6 +1,6 @@
 {
-    "name": "Riot - open team collaboration",
-    "short_name": "Riot",
+    "name": "OpenIntents Chat - based on Riot",
+    "short_name": "OI Chat",
     "display": "standalone",
     "theme_color": "#76CFA6",
     "start_url": "index.html",
@@ -40,17 +40,6 @@
             "sizes": "192x192",
             "type": "image\/png",
             "density": "4.0"
-        }
-    ],
-    "related_applications": [
-        {
-            "platform": "play",
-            "url": "https://play.google.com/store/apps/details?id=im.vector.alpha",
-            "id": "im.vector.alpha"
-        },
-        {
-            "platform": "itunes",
-            "url": "https://itunes.apple.com/gb/app/riot-open-source-team-collaboration-via-matrix/id1083446067"
         }
     ]
 }
