@@ -65,6 +65,10 @@ module.exports = React.createClass({
                             </a>
                         </div>
                     </div>
+                    <div className="mx_Login_error">
+                        We experience problems with the login, please try twice.
+                        You can contact us on <a href="mailto:support@openintents.org">support at openintents.org</a>
+                    </div>
                 </div>
             </div>
         );
