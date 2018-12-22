@@ -67,9 +67,7 @@ module.exports = React.createClass({
                             </a>
                         </div>
                     </div>
-                    <div className="mx_Login_error">
-                        We are updating our authentication servers. Login will fail for now!!!
-                        You can contact us on <a href="mailto:support@openintents.org">support at openintents.org</a>
+                    <div className="mx_Login_error">                
                     </div>
                 </div>
             </div>
