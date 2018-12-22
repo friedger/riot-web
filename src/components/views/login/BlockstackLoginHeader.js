@@ -37,7 +37,7 @@ module.exports = React.createClass({
                 <div className="mx_Login_logo">
                     <img
                         src={this.props.icon || DEFAULT_LOGO_URI}
-                        alt="Riot Blockstack"
+                        alt="OI Chat"
                     />
                 </div>
                 <div>
@@ -46,8 +46,10 @@ module.exports = React.createClass({
                         decentralized communication.
                     </h2>
                     <p>
-                        OI Chat is a matrix server dedicated to users with
-                        Blockstack ID
+                        OI Chat is a matrix service dedicated to users with
+                        Blockstack IDs.                    
+                        Your Blockstack ID is your account. 
+                        The first 1000 are given away for free!
                     </p>
                     <div className="mx_Login_learn">
                         <div>
