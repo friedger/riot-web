@@ -1,0 +1,138 @@
+{
+    "bg": {
+        "fileName": "bg.json",
+        "label": "Български"
+    },
+    "ca": {
+        "fileName": "ca.json",
+        "label": "Català"
+    },
+    "cs": {
+        "fileName": "cs.json",
+        "label": "čeština"
+    },
+    "da": {
+        "fileName": "da.json",
+        "label": "Dansk"
+    },
+    "de": {
+        "fileName": "de_DE.json",
+        "label": "Deutsch"
+    },
+    "el": {
+        "fileName": "el.json",
+        "label": "Ελληνικά"
+    },
+    "en": {
+        "fileName": "en_EN.json",
+        "label": "English"
+    },
+    "en-us": {
+        "fileName": "en_US.json",
+        "label": "English (US)"
+    },
+    "eo": {
+        "fileName": "eo.json",
+        "label": "Esperanto"
+    },
+    "es": {
+        "fileName": "es.json",
+        "label": "Español"
+    },
+    "eu": {
+        "fileName": "eu.json",
+        "label": "Euskara"
+    },
+    "fi": {
+        "fileName": "fi.json",
+        "label": "Suomi"
+    },
+    "fr": {
+        "fileName": "fr.json",
+        "label": "Français"
+    },
+    "gl": {
+        "fileName": "gl.json",
+        "label": "Galego"
+    },
+    "hu": {
+        "fileName": "hu.json",
+        "label": "Magyar"
+    },
+    "it": {
+        "fileName": "it.json",
+        "label": "Italiano"
+    },
+    "ja": {
+        "fileName": "ja.json",
+        "label": "日本語"
+    },
+    "ko": {
+        "fileName": "ko.json",
+        "label": "한국어"
+    },
+    "lv": {
+        "fileName": "lv.json",
+        "label": "Latviešu"
+    },
+    "nb-no": {
+        "fileName": "nb_NO.json",
+        "label": "Norwegian Bokmål"
+    },
+    "nl": {
+        "fileName": "nl.json",
+        "label": "Nederlands"
+    },
+    "nn": {
+        "fileName": "nn.json",
+        "label": "Norsk Nynorsk"
+    },
+    "pl": {
+        "fileName": "pl.json",
+        "label": "Polski"
+    },
+    "pt": {
+        "fileName": "pt.json",
+        "label": "Português"
+    },
+    "pt-br": {
+        "fileName": "pt_BR.json",
+        "label": "Português do Brasil"
+    },
+    "ru": {
+        "fileName": "ru.json",
+        "label": "Русский"
+    },
+    "sk": {
+        "fileName": "sk.json",
+        "label": "Slovenčina"
+    },
+    "sr": {
+        "fileName": "sr.json",
+        "label": "српски"
+    },
+    "sv": {
+        "fileName": "sv.json",
+        "label": "Svenska"
+    },
+    "te": {
+        "fileName": "te.json",
+        "label": "తెలుగు"
+    },
+    "th": {
+        "fileName": "th.json",
+        "label": "ไทย"
+    },
+    "tr": {
+        "fileName": "tr.json",
+        "label": "Türk"
+    },
+    "zh-hans": {
+        "fileName": "zh_Hans.json",
+        "label": "简体中文"
+    },
+    "zh-hant": {
+        "fileName": "zh_Hant.json",
+        "label": "繁體中文"
+    }
+}
