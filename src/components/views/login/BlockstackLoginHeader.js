@@ -48,7 +48,7 @@ module.exports = React.createClass({
                     <p>
                         OI Chat is a matrix service dedicated to users with
                         Blockstack IDs.                    
-                        Your Blockstack ID is your account. 
+                        Your Blockstack account is your matrix account. 
                         The first 1000 are given away for free!
                     </p>
                     <div className="mx_Login_learn">
@@ -67,7 +67,9 @@ module.exports = React.createClass({
                             </a>
                         </div>
                     </div>
-                    <div className="mx_Login_error">                
+                    <div className="mx_Login_error"> 
+                        Maintenance: Upgrading from blockstack ID to identity addresses.
+                        Login might fail!               
                     </div>
                 </div>
             </div>
