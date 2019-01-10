@@ -67,9 +67,7 @@ module.exports = React.createClass({
                             </a>
                         </div>
                     </div>
-                    <div className="mx_Login_error"> 
-                        Maintenance: Upgrading from blockstack ID to identity addresses.
-                        Login might fail!               
+                    <div className="mx_Login_error">
                     </div>
                 </div>
             </div>
