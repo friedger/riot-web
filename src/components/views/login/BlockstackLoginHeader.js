@@ -43,39 +43,8 @@ module.exports = React.createClass({
                 <div>
                     <h2>
                         Your gateway to an open network for secure,
-                        decentralized communication.
-                    </h2>
-                    <p>
-                        OI Chat is a matrix service dedicated to users with
-                        Blockstack IDs.
-                        Your Blockstack account is your matrix account.
-                        The first 1000 are given away for free!
-                    </p>
-                    <div className="mx_Login_learn">
-                        <div>
-                            <a href="https://matrix.org">
-                                <img src="home/images/matrix.svg" />
-                                <br />
-                                Learn more about matrix.org
-                            </a>
-                        </div>
-                        <div>
-                            <a href="https://blockstack.org">
-                                <img src="home/images/blockstack.png" />
-                                <br />
-                                Learn more about blockstack.org
-                            </a>
-                        </div>
-                    </div>
-                    <div>
-                    <a target="_blank" href="https://matrix.openintents.org/about">
-                        <button
-                            className="mx_Login_blockstack"                            
-                        >
-                            Read more about OI Chat?
-                        </button>
-                        </a>
-                    </div>
+                        decentralized communication and collaboration.
+                    </h2>                    
                     <div className="mx_Login_error">
                     </div>
                 </div>
