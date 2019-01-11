@@ -30,7 +30,7 @@ module.exports = React.createClass({
         icon: PropTypes.string
     },
 
-    render: function() {
+    render: function () {
         return (
             <div className="mx_Login_header">
                 <h1>OI Chat</h1>
@@ -47,8 +47,8 @@ module.exports = React.createClass({
                     </h2>
                     <p>
                         OI Chat is a matrix service dedicated to users with
-                        Blockstack IDs.                    
-                        Your Blockstack account is your matrix account. 
+                        Blockstack IDs.
+                        Your Blockstack account is your matrix account.
                         The first 1000 are given away for free!
                     </p>
                     <div className="mx_Login_learn">
@@ -66,6 +66,15 @@ module.exports = React.createClass({
                                 Learn more about blockstack.org
                             </a>
                         </div>
+                    </div>
+                    <div>
+                    <a target="_blank" href="https://matrix.openintents.org/about">
+                        <button
+                            className="mx_Login_blockstack"                            
+                        >
+                            Read more about OI Chat?
+                        </button>
+                        </a>
                     </div>
                     <div className="mx_Login_error">
                     </div>

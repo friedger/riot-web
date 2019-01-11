@@ -21,7 +21,7 @@ import { _t } from 'matrix-react-sdk/lib/languageHandler';
 import SettingsStore from 'matrix-react-sdk/lib/settings/SettingsStore';
 
 module.exports = React.createClass({
-    displayName: 'VectorLoginFooter',
+    displayName: 'BlockstackLoginFooter',
     statics: {
         replaces: 'LoginFooter',
     },
@@ -33,9 +33,9 @@ module.exports = React.createClass({
 
         return (
             <div className="mx_Login_links">
-                <a href="https://medium.com/@RiotChat">blog</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp;
-                <a href="https://twitter.com/@RiotChat">twitter</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp;
-                <a href="https://github.com/vector-im/riot-web">github</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+                <a href="http://www.openintents.org/blog/">blog</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+                <a href="https://twitter.com/openintents">twitter</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+                <a href="https://github.com/friedger/riot-web">github</a>&nbsp;&nbsp;&middot;&nbsp;&nbsp;
                 <a href="https://matrix.org">{ _t('powered by Matrix') }</a>
             </div>
         );
