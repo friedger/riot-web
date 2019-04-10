@@ -1,138 +1,138 @@
 {
     "bg": {
-        "fileName": "bg.json",
+        "fileName": "bg.9c22a71.json",
         "label": "Български"
     },
     "ca": {
-        "fileName": "ca.json",
+        "fileName": "ca.d583bd8.json",
         "label": "Català"
     },
     "cs": {
-        "fileName": "cs.json",
+        "fileName": "cs.dbcc599.json",
         "label": "čeština"
     },
     "da": {
-        "fileName": "da.json",
+        "fileName": "da.4131a28.json",
         "label": "Dansk"
     },
     "de": {
-        "fileName": "de_DE.json",
+        "fileName": "de_DE.6505993.json",
         "label": "Deutsch"
     },
     "el": {
-        "fileName": "el.json",
+        "fileName": "el.8fa05e3.json",
         "label": "Ελληνικά"
     },
     "en": {
-        "fileName": "en_EN.json",
+        "fileName": "en_EN.87e473e.json",
         "label": "English"
     },
     "en-us": {
-        "fileName": "en_US.json",
+        "fileName": "en_US.d2832df.json",
         "label": "English (US)"
     },
     "eo": {
-        "fileName": "eo.json",
+        "fileName": "eo.c056929.json",
         "label": "Esperanto"
     },
     "es": {
-        "fileName": "es.json",
+        "fileName": "es.e7a4da2.json",
         "label": "Español"
     },
     "eu": {
-        "fileName": "eu.json",
+        "fileName": "eu.93549d3.json",
         "label": "Euskara"
     },
     "fi": {
-        "fileName": "fi.json",
+        "fileName": "fi.654bae7.json",
         "label": "Suomi"
     },
     "fr": {
-        "fileName": "fr.json",
+        "fileName": "fr.1a6ce66.json",
         "label": "Français"
     },
     "gl": {
-        "fileName": "gl.json",
+        "fileName": "gl.ab6e0ef.json",
         "label": "Galego"
     },
     "hu": {
-        "fileName": "hu.json",
+        "fileName": "hu.722a90e.json",
         "label": "Magyar"
     },
     "it": {
-        "fileName": "it.json",
+        "fileName": "it.909077b.json",
         "label": "Italiano"
     },
     "ja": {
-        "fileName": "ja.json",
+        "fileName": "ja.b2ef80b.json",
         "label": "日本語"
     },
     "ko": {
-        "fileName": "ko.json",
+        "fileName": "ko.97a7f14.json",
         "label": "한국어"
     },
     "lv": {
-        "fileName": "lv.json",
+        "fileName": "lv.94c59b9.json",
         "label": "Latviešu"
     },
     "nb-no": {
-        "fileName": "nb_NO.json",
+        "fileName": "nb_NO.db03e19.json",
         "label": "Norwegian Bokmål"
     },
     "nl": {
-        "fileName": "nl.json",
+        "fileName": "nl.72ad662.json",
         "label": "Nederlands"
     },
     "nn": {
-        "fileName": "nn.json",
+        "fileName": "nn.3f3555a.json",
         "label": "Norsk Nynorsk"
     },
     "pl": {
-        "fileName": "pl.json",
+        "fileName": "pl.b4df9bf.json",
         "label": "Polski"
     },
     "pt": {
-        "fileName": "pt.json",
+        "fileName": "pt.9a07d7b.json",
         "label": "Português"
     },
     "pt-br": {
-        "fileName": "pt_BR.json",
+        "fileName": "pt_BR.f6a7b33.json",
         "label": "Português do Brasil"
     },
     "ru": {
-        "fileName": "ru.json",
+        "fileName": "ru.b39a853.json",
         "label": "Русский"
     },
     "sk": {
-        "fileName": "sk.json",
+        "fileName": "sk.97041b6.json",
         "label": "Slovenčina"
     },
     "sr": {
-        "fileName": "sr.json",
+        "fileName": "sr.e93c7fb.json",
         "label": "српски"
     },
     "sv": {
-        "fileName": "sv.json",
+        "fileName": "sv.ed5175b.json",
         "label": "Svenska"
     },
     "te": {
-        "fileName": "te.json",
+        "fileName": "te.a349a66.json",
         "label": "తెలుగు"
     },
     "th": {
-        "fileName": "th.json",
+        "fileName": "th.bf48177.json",
         "label": "ไทย"
     },
     "tr": {
-        "fileName": "tr.json",
+        "fileName": "tr.5ea97b6.json",
         "label": "Türk"
     },
     "zh-hans": {
-        "fileName": "zh_Hans.json",
+        "fileName": "zh_Hans.b627103.json",
         "label": "简体中文"
     },
     "zh-hant": {
-        "fileName": "zh_Hant.json",
+        "fileName": "zh_Hant.436f34b.json",
         "label": "繁體中文"
     }
 }
