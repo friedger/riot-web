@@ -59,7 +59,9 @@ export default class DiriPasswordLogin extends React.Component {
     }
 
     componentDidMount() {
+        console.log("login screen" + window.location.search);
         if (blockstack.isUserSignedIn()) {
+            console.log("user signed in");
             const userData = blockstack.loadUserData();
             this.blockstackStateFromUserData(userData).then(state => {
                 this.setState(state);
@@ -71,6 +73,7 @@ export default class DiriPasswordLogin extends React.Component {
                 );
             });
         } else if (blockstack.isSignInPending()) {
+            console.log("user pending");
             blockstack.handlePendingSignIn().then(userData => {
                 this.blockstackStateFromUserData(userData).then(state => {
                     this.setState(state);
@@ -130,7 +133,7 @@ export default class DiriPasswordLogin extends React.Component {
 
     onBlockstackLoginClick(ev) {
         blockstack.redirectToSignIn(
-            window.location.origin + "/",
+            window.location.origin + "/#/login",
             window.location.origin + "/manifest.json",
             ["store_write", "publish_data"]
         );

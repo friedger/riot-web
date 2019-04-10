@@ -128,7 +128,9 @@ function onNewScreen(screen) {
     console.log("newscreen "+screen);
     const hash = '#/' + screen;
     lastLocationHashSet = hash;
+    const oldsearch = window.location.search;
     window.location.hash = hash;
+    window.location.search = oldsearch;
 }
 
 // We use this to work out what URL the SDK should

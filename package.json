@@ -1,6 +1,6 @@
 {
   "name": "riot-web",
-  "productName": "Riot",
+  "productName": "OI Chat",
   "main": "electron_app/src/electron-main.js",
   "version": "1.0.1",
   "description": "A feature-rich client for Matrix.org",
