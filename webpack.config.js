@@ -208,3 +208,27 @@ module.exports = {
         inline: false,
     },
 };
+
+/**
+ * Merge assets found via CSS and imports into a single tree, while also preserving
+ * directories under `res`.
+ *
+ * @param {string} url The adjusted name of the file, such as `warning.1234567.svg`.
+ * @param {string} resourcePath The absolute path to the source file with unmodified name.
+ * @return {string} The returned paths will look like `img/warning.1234567.svg`.
+ */
+function getImgOutputPath(url, resourcePath) {
+    const prefix = /^.*[/\\]res[/\\]/;
+    const outputDir = path.dirname(resourcePath).replace(prefix, "");
+    return path.join(outputDir, path.basename(url));
+}
+
+/**
+ * Convert path to public path format, which always uses forward slashes, since it will
+ * be placed directly into things like CSS files.
+ *
+ * @param {string} path Some path to a file.
+ */
+function toPublicPath(path) {
+    return path.replace(/\\/g, '/');
+}

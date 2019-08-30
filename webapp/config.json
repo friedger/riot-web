@@ -6,6 +6,12 @@
     "disable_login_language_selector": false,
     "disable_3pid_login": false,
     "brand": "OI Chat",
+    "branding": {
+        "authHeaderLogoUrl":"themes/riot/img/logos/oichat.svg",
+        "authFooterLinks":[{"text": "blog", "url": "https://openintents.org/blog"},
+            {"text": "twitter", "url": "https://twitter.com/@openintents"},
+            {"text": "github", "url": "https://github.com/friedger/riot-web"}]
+    },
     "integrations_ui_url": "https://scalar.vector.im/",
     "integrations_rest_url": "https://scalar.vector.im/api",
     "integrations_jitsi_widget_url": "https://scalar.vector.im/api/widgets/jitsi.html",
