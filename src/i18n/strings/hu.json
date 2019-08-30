@@ -35,5 +35,20 @@
     "Dev chat for the Dendrite dev team": "Csevegés a Dendrite fejlesztői csapatával fejlesztőknek",
     "Lots of rooms already exist in Matrix, linked to existing networks (Slack, IRC, Gitter etc) or independent. Check out the directory!": "Már sok szoba van a Matrixon: más hálózatokkal (Slack, IRC, Gitter stb.) összekapcsolt és függetlenek szobák is. Nézd meg a szobajegyzéket!",
     "You can use the custom server options to sign into other Matrix servers by specifying a different Home server URL.<br/>This allows you to use Riot with an existing Matrix account on a different home server.<br/><br/>You can also set a custom identity server but you won't be able to invite users by email address, or be invited by email address yourself.": "Bejelentkezhetsz más Matrix szerverre is az egyedi szerverbeállításoknál megadott Matrix szerver URL-jével.<br/>Így használhatod a Riotot egy már máshol meglévő Matrix fiókkal is.<br/><br/>Beállíthatsz egyéni identitásszervert is, de akkor nem tudsz más felhasználókat e-mail címmel meghívni, illetve ők sem tudnak téged.",
-    "Co-ordination for Riot translators": "Koordináció Riot fordítók számára"
+    "Co-ordination for Riot translators": "Koordináció Riot fordítók számára",
+    "You can also set a custom identity server, but you won't be able to invite users by email address, or be invited by email address yourself.": "Más azonosítási szervert is használhatsz, de akkor nem tudsz másokat e-mail cím alapján meghívni és téged sem fognak tudni.",
+    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use Riot with an existing Matrix account on a different homeserver.": "Használhatod az egyedi szerver beállítást más Matrix szerverre való belépéshez, azzal, hogy megadod a Matrix szerver URL-jét. Ezzel a Riot-ot használhatod más Matrix szerveren lévő fiókkal.",
+    "Sign In": "Bejelentkezés",
+    "Create Account": "Fiók készítés",
+    "Need help?": "Segíthetünk?",
+    "Explore rooms": "Szobák felfedezése",
+    "Room Directory": "Szoba lista",
+    "Unexpected error preparing the app. See console for details.": "Váratlan hiba történt az alkalmazás előkészítésénél. A részletekért nézd meg a konzolt.",
+    "Invalid configuration: can only specify one of default_server_config, default_server_name, or default_hs_url.": "Érvénytelen konfiguráció: csak egyet lehet megadni a default_server_config, default_server_name és default_hs_url közül.",
+    "Invalid configuration: no default server specified.": "Érvénytelen konfiguráció: nincs megadva alapértelmezett szerver.",
+    "This installation of Riot seems to have an invalid server configuration. If you are the administrator, please correct the error below": "A telepített Riotnak úgy tűnik hibás a szerver beállítása. Ha te vagy az adminisztrátor, kérlek javítsd az alábbi hibát",
+    "Your Riot is misconfigured": "A Riotod hibásan van beállítva",
+    "Your Riot configuration contains invalid JSON. Please correct the problem and reload the page.": "A Riot beállításod érvénytelen JSON szöveget tartalmaz. Kérlek javítsd és töltsd újra az oldalt.",
+    "The message from the parser is: %(message)s": "A feldolgozó algoritmus üzenete: %(message)s",
+    "Invalid JSON": "Érvénytelen JSON"
 }
