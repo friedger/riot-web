@@ -20,57 +20,62 @@ limitations under the License.
 // Require common CSS here; this will make webpack process it into bundle.css.
 // Our own CSS (which is themed) is imported via separate webpack entry points
 // in webpack.config.js
-require('gemini-scrollbar/gemini-scrollbar.css');
-require('gfm.css/gfm.css');
-require('highlight.js/styles/github.css');
-require('draft-js/dist/Draft.css');
+require("gemini-scrollbar/gemini-scrollbar.css");
+require("gfm.css/gfm.css");
+require("highlight.js/styles/github.css");
+require("draft-js/dist/Draft.css");
 
-import olmWasmPath from 'olm/olm.wasm';
+import olmWasmPath from "olm/olm.wasm";
 
-import './rageshakesetup';
+import "./rageshakesetup";
 
-import React from 'react';
+import React from "react";
 // add React and ReactPerf to the global namespace, to make them easier to
 // access via the console
 global.React = React;
-if (process.env.NODE_ENV !== 'production') {
-    global.Perf = require('react-addons-perf');
+if (process.env.NODE_ENV !== "production") {
+    global.Perf = require("react-addons-perf");
 }
 
-import './modernizr';
-import ReactDOM from 'react-dom';
-import sdk from 'matrix-react-sdk';
-import PlatformPeg from 'matrix-react-sdk/lib/PlatformPeg';
-sdk.loadSkin(require('../component-index'));
-import VectorConferenceHandler from 'matrix-react-sdk/lib/VectorConferenceHandler';
-import Promise from 'bluebird';
-import * as languageHandler from 'matrix-react-sdk/lib/languageHandler';
-import {_t, _td, newTranslatableError} from 'matrix-react-sdk/lib/languageHandler';
-import AutoDiscoveryUtils from 'matrix-react-sdk/lib/utils/AutoDiscoveryUtils';
-import {AutoDiscovery} from "matrix-js-sdk/lib/autodiscovery";
+import "./modernizr";
+import ReactDOM from "react-dom";
+import sdk from "matrix-react-sdk";
+import PlatformPeg from "matrix-react-sdk/lib/PlatformPeg";
+sdk.loadSkin(require("../component-index"));
+import VectorConferenceHandler from "matrix-react-sdk/lib/VectorConferenceHandler";
+import Promise from "bluebird";
+import * as languageHandler from "matrix-react-sdk/lib/languageHandler";
+import {
+    _t,
+    _td,
+    newTranslatableError
+} from "matrix-react-sdk/lib/languageHandler";
+import AutoDiscoveryUtils from "matrix-react-sdk/lib/utils/AutoDiscoveryUtils";
+import { AutoDiscovery } from "matrix-js-sdk/lib/autodiscovery";
 import * as Lifecycle from "matrix-react-sdk/lib/Lifecycle";
 
-import url from 'url';
+import url from "url";
+import * as blockstack from "blockstack";
 
-import {parseQs, parseQsFromFragment} from './url_utils';
+import { parseQs, parseQsFromFragment } from "./url_utils";
 
-import ElectronPlatform from './platform/ElectronPlatform';
-import WebPlatform from './platform/WebPlatform';
+import ElectronPlatform from "./platform/ElectronPlatform";
+import WebPlatform from "./platform/WebPlatform";
 
-import MatrixClientPeg from 'matrix-react-sdk/lib/MatrixClientPeg';
+import MatrixClientPeg from "matrix-react-sdk/lib/MatrixClientPeg";
 import SettingsStore from "matrix-react-sdk/lib/settings/SettingsStore";
-import Tinter from 'matrix-react-sdk/lib/Tinter';
+import Tinter from "matrix-react-sdk/lib/Tinter";
 import SdkConfig from "matrix-react-sdk/lib/SdkConfig";
 
-import Olm from 'olm';
+import Olm from "olm";
 
-import CallHandler from 'matrix-react-sdk/lib/CallHandler';
+import CallHandler from "matrix-react-sdk/lib/CallHandler";
 
 let lastLocationHashSet = null;
 
 // Disable warnings for now: we use deprecated bluebird functions
 // and need to migrate, but they spam the console with warnings.
-Promise.config({warnings: false});
+Promise.config({ warnings: false });
 
 function checkBrowserFeatures(featureList) {
     if (!window.Modernizr) {
@@ -82,7 +87,8 @@ function checkBrowserFeatures(featureList) {
         if (window.Modernizr[featureList[i]] === undefined) {
             console.error(
                 "Looked for feature '%s' but Modernizr has no results for this. " +
-                "Has it been configured correctly?", featureList[i],
+                    "Has it been configured correctly?",
+                featureList[i]
             );
             return false;
         }
@@ -102,7 +108,7 @@ function getScreenFromLocation(location) {
     const fragparts = parseQsFromFragment(location);
     return {
         screen: fragparts.location.substring(1),
-        params: fragparts.params,
+        params: fragparts.params
     };
 }
 
@@ -127,8 +133,8 @@ function onHashChange(ev) {
 // This will be called whenever the SDK changes screens,
 // so a web page can update the URL bar appropriately.
 function onNewScreen(screen) {
-    console.log("newscreen "+screen);
-    const hash = '#/' + screen;
+    console.log("newscreen " + screen);
+    const hash = "#/" + screen;
     lastLocationHashSet = hash;
     window.location.hash = hash;
 }
@@ -145,25 +151,25 @@ function onNewScreen(screen) {
 function makeRegistrationUrl(params) {
     let url;
     if (window.location.protocol === "vector:") {
-        url = 'https://riot.im/app/#/register';
+        url = "https://riot.im/app/#/register";
     } else {
-        url = (
-            window.location.protocol + '//' +
+        url =
+            window.location.protocol +
+            "//" +
             window.location.host +
             window.location.pathname +
-            '#/register'
-        );
+            "#/register";
     }
 
     const keys = Object.keys(params);
     for (let i = 0; i < keys.length; ++i) {
         if (i === 0) {
-            url += '?';
+            url += "?";
         } else {
-            url += '&';
+            url += "&";
         }
         const k = keys[i];
-        url += k + '=' + encodeURIComponent(params[k]);
+        url += k + "=" + encodeURIComponent(params[k]);
     }
     return url;
 }
@@ -175,8 +181,12 @@ function onTokenLoginCompleted() {
     const parsedUrl = url.parse(window.location.href);
     parsedUrl.search = "";
     const formatted = url.format(parsedUrl);
-    console.log("Redirecting to " + formatted + " to drop loginToken " +
-                "from queryparams");
+    console.log(
+        "Redirecting to " +
+            formatted +
+            " to drop loginToken " +
+            "from queryparams"
+    );
     window.location.href = formatted;
 }
 
@@ -188,10 +198,12 @@ async function loadApp() {
         // make sure the indexeddb script is present, so fail hard.
         throw new Error("Missing indexeddb worker script!");
     }
-    MatrixClientPeg.setIndexedDbWorkerScript(window.vector_indexeddb_worker_script);
+    MatrixClientPeg.setIndexedDbWorkerScript(
+        window.vector_indexeddb_worker_script
+    );
     CallHandler.setConferenceHandler(VectorConferenceHandler);
 
-    window.addEventListener('hashchange', onHashChange);
+    window.addEventListener("hashchange", onHashChange);
 
     await loadOlm();
 
@@ -208,7 +220,7 @@ async function loadApp() {
 
         // Electron only: see if we need to do a one-time data
         // migration
-        if (window.localStorage.getItem('mx_user_id') === null) {
+        if (window.localStorage.getItem("mx_user_id") === null) {
             console.log("Migrating session from old origin...");
             await plaf.migrateFromOldOrigin();
             console.log("Origin migration complete");
@@ -243,13 +255,19 @@ async function loadApp() {
     // verifying a 3pid (but after we've loaded the config)
     // or if the user is following a deep link
     // (https://github.com/vector-im/riot-web/issues/7378)
-    const preventRedirect = fragparts.params.client_secret || fragparts.location.length > 0;
+    const preventRedirect =
+        fragparts.params.client_secret || fragparts.location.length > 0;
 
     if (!preventRedirect) {
-        const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isIos =
+            /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         const isAndroid = /Android/.test(navigator.userAgent);
         if (isIos || isAndroid) {
-            if (document.cookie.indexOf("riot_mobile_redirect_to_guide=false") === -1) {
+            if (
+                document.cookie.indexOf(
+                    "riot_mobile_redirect_to_guide=false"
+                ) === -1
+            ) {
                 window.location = "mobile_guide/";
                 return;
             }
@@ -283,7 +301,7 @@ async function loadApp() {
                 // feature check.
                 // Firefox loads css always before js. This is why we dont use
                 // onload or it's EventListener as thoose will never trigger.
-                if (typeof InstallTrigger !== 'undefined') {
+                if (typeof InstallTrigger !== "undefined") {
                     Tinter.setTheme(theme);
                 } else {
                     // FIXME: we should probably block loading the app or even
@@ -309,84 +327,142 @@ async function loadApp() {
                 <p>
                     {_t(
                         "Your Riot configuration contains invalid JSON. Please correct the problem " +
-                        "and reload the page.",
+                            "and reload the page."
                     )}
                 </p>
                 <p>
-                    {_t(
-                        "The message from the parser is: %(message)s",
-                        {message: configError.err.message || _t("Invalid JSON")},
-                    )}
+                    {_t("The message from the parser is: %(message)s", {
+                        message: configError.err.message || _t("Invalid JSON")
+                    })}
                 </p>
             </div>
         );
 
-        const GenericErrorPage = sdk.getComponent("structures.GenericErrorPage");
+        const GenericErrorPage = sdk.getComponent(
+            "structures.GenericErrorPage"
+        );
         window.matrixChat = ReactDOM.render(
-            <GenericErrorPage message={errorMessage} title={_t("Your Riot is misconfigured")} />,
-            document.getElementById('matrixchat'),
+            <GenericErrorPage
+                message={errorMessage}
+                title={_t("Your Riot is misconfigured")}
+            />,
+            document.getElementById("matrixchat")
         );
         return;
     }
 
     const validBrowser = checkBrowserFeatures([
-        "displaytable", "flexbox", "es5object", "es5function", "localstorage",
-        "objectfit", "indexeddb", "webworkers",
+        "displaytable",
+        "flexbox",
+        "es5object",
+        "es5function",
+        "localstorage",
+        "objectfit",
+        "indexeddb",
+        "webworkers"
     ]);
 
-    const acceptInvalidBrowser = window.localStorage && window.localStorage.getItem('mx_accepts_unsupported_browser');
+    const acceptInvalidBrowser =
+        window.localStorage &&
+        window.localStorage.getItem("mx_accepts_unsupported_browser");
 
-    console.log("Vector starting at "+window.location);
+    console.log("Vector2 starting at " + window.location);
     if (configError) {
-        window.matrixChat = ReactDOM.render(<div className="error">
-            Unable to load config file: please refresh the page to try again.
-        </div>, document.getElementById('matrixchat'));
+        window.matrixChat = ReactDOM.render(
+            <div className="error">
+                Unable to load config file: please refresh the page to try
+                again.
+            </div>,
+            document.getElementById("matrixchat")
+        );
     } else if (validBrowser || acceptInvalidBrowser) {
         platform.startUpdater();
 
+        if (blockstack.isSignInPending()) {
+            console.log("signIn is pending");
+
+            const href =
+                window.location.origin +
+                window.location.pathname +
+                window.location.hash;
+            console.log({ href });
+
+            if (blockstack.isUserSignedIn()) {
+                console.log("user signed in");
+                window.location.href = href;
+                return;
+            } else {
+                blockstack.handlePendingSignIn().then(u => {
+                    window.location.href = window.location.origin +
+                    window.location.pathname + "#/login";
+                });
+                return;
+            }
+        }
+
         // Don't bother loading the app until the config is verified
-        verifyServerConfig().then((newConfig) => {
-            const MatrixChat = sdk.getComponent('structures.MatrixChat');
-            window.matrixChat = ReactDOM.render(
-                <MatrixChat
-                    onNewScreen={onNewScreen}
-                    makeRegistrationUrl={makeRegistrationUrl}
-                    ConferenceHandler={VectorConferenceHandler}
-                    config={newConfig}
-                    realQueryParams={params}
-                    startingFragmentQueryParams={fragparts.params}
-                    enableGuest={!configJson.disable_guests}
-                    onTokenLoginCompleted={onTokenLoginCompleted}
-                    initialScreenAfterLogin={getScreenFromLocation(window.location)}
-                    defaultDeviceDisplayName={platform.getDefaultDeviceDisplayName()}
-                />,
-                document.getElementById('matrixchat'),
-            );
-        }).catch(err => {
-            console.error(err);
+        verifyServerConfig()
+            .then(newConfig => {
+                const MatrixChat = sdk.getComponent("structures.MatrixChat");
+                window.matrixChat = ReactDOM.render(
+                    <MatrixChat
+                        onNewScreen={onNewScreen}
+                        makeRegistrationUrl={makeRegistrationUrl}
+                        ConferenceHandler={VectorConferenceHandler}
+                        config={newConfig}
+                        realQueryParams={params}
+                        startingFragmentQueryParams={fragparts.params}
+                        enableGuest={!configJson.disable_guests}
+                        onTokenLoginCompleted={onTokenLoginCompleted}
+                        initialScreenAfterLogin={getScreenFromLocation(
+                            window.location
+                        )}
+                        defaultDeviceDisplayName={platform.getDefaultDeviceDisplayName()}
+                    />,
+                    document.getElementById("matrixchat")
+                );
+            })
+            .catch(err => {
+                console.error(err);
 
-            let errorMessage = err.translatedMessage
-                || _t("Unexpected error preparing the app. See console for details.");
-            errorMessage = <span>{errorMessage}</span>;
+                let errorMessage =
+                    err.translatedMessage ||
+                    _t(
+                        "Unexpected error preparing the app. See console for details."
+                    );
+                errorMessage = <span>{errorMessage}</span>;
 
-            // Like the compatibility page, AWOOOOOGA at the user
-            const GenericErrorPage = sdk.getComponent("structures.GenericErrorPage");
-            window.matrixChat = ReactDOM.render(
-                <GenericErrorPage message={errorMessage} title={_t("Your Riot is misconfigured")} />,
-                document.getElementById('matrixchat'),
-            );
-        });
+                // Like the compatibility page, AWOOOOOGA at the user
+                const GenericErrorPage = sdk.getComponent(
+                    "structures.GenericErrorPage"
+                );
+                window.matrixChat = ReactDOM.render(
+                    <GenericErrorPage
+                        message={errorMessage}
+                        title={_t("Your Riot is misconfigured")}
+                    />,
+                    document.getElementById("matrixchat")
+                );
+            });
     } else {
         console.error("Browser is missing required features.");
         // take to a different landing page to AWOOOOOGA at the user
-        const CompatibilityPage = sdk.getComponent("structures.CompatibilityPage");
+        const CompatibilityPage = sdk.getComponent(
+            "structures.CompatibilityPage"
+        );
         window.matrixChat = ReactDOM.render(
-            <CompatibilityPage onAccept={function() {
-                if (window.localStorage) window.localStorage.setItem('mx_accepts_unsupported_browser', true);
-                console.log("User accepts the compatibility risks.");
-                loadApp();
-            }} />,
-            document.getElementById('matrixchat'),
+            <CompatibilityPage
+                onAccept={function() {
+                    if (window.localStorage)
+                        window.localStorage.setItem(
+                            "mx_accepts_unsupported_browser",
+                            true
+                        );
+                    console.log("User accepts the compatibility risks.");
+                    loadApp();
+                }}
+            />,
+            document.getElementById("matrixchat")
         );
     }
 }
@@ -405,35 +481,44 @@ function loadOlm() {
      * filename to avoid caching issues.
      */
     return Olm.init({
-        locateFile: () => olmWasmPath,
-    }).then(() => {
-        console.log("Using WebAssembly Olm");
-    }).catch((e) => {
-        console.log("Failed to load Olm: trying legacy version", e);
-        return new Promise((resolve, reject) => {
-            const s = document.createElement('script');
-            s.src = 'olm_legacy.js'; // XXX: This should be cache-busted too
-            s.onload = resolve;
-            s.onerror = reject;
-            document.body.appendChild(s);
-        }).then(() => {
-            // Init window.Olm, ie. the one just loaded by the script tag,
-            // not 'Olm' which is still the failed wasm version.
-            return window.Olm.init();
-        }).then(() => {
-            console.log("Using legacy Olm");
-        }).catch((e) => {
-            console.log("Both WebAssembly and asm.js Olm failed!", e);
+        locateFile: () => olmWasmPath
+    })
+        .then(() => {
+            console.log("Using WebAssembly Olm");
+        })
+        .catch(e => {
+            console.log("Failed to load Olm: trying legacy version", e);
+            return new Promise((resolve, reject) => {
+                const s = document.createElement("script");
+                s.src = "olm_legacy.js"; // XXX: This should be cache-busted too
+                s.onload = resolve;
+                s.onerror = reject;
+                document.body.appendChild(s);
+            })
+                .then(() => {
+                    // Init window.Olm, ie. the one just loaded by the script tag,
+                    // not 'Olm' which is still the failed wasm version.
+                    return window.Olm.init();
+                })
+                .then(() => {
+                    console.log("Using legacy Olm");
+                })
+                .catch(e => {
+                    console.log("Both WebAssembly and asm.js Olm failed!", e);
+                });
         });
-    });
 }
 
 async function loadLanguage() {
-    const prefLang = SettingsStore.getValue("language", null, /*excludeDefault=*/true);
+    const prefLang = SettingsStore.getValue(
+        "language",
+        null,
+        /*excludeDefault=*/ true
+    );
     let langs = [];
 
     if (!prefLang) {
-        languageHandler.getLanguagesFromBrowser().forEach((l) => {
+        languageHandler.getLanguagesFromBrowser().forEach(l => {
             langs.push(...languageHandler.getNormalizedLanguageKeys(l));
         });
     } else {
@@ -441,7 +526,10 @@ async function loadLanguage() {
     }
     try {
         await languageHandler.setLanguage(langs);
-        document.documentElement.setAttribute("lang", languageHandler.getCurrentLanguage());
+        document.documentElement.setAttribute(
+            "lang",
+            languageHandler.getCurrentLanguage()
+        );
     } catch (e) {
         console.error("Unable to set language", e);
     }
@@ -462,73 +550,97 @@ async function verifyServerConfig() {
         // validators for that purpose.
 
         const config = SdkConfig.get();
-        let wkConfig = config['default_server_config']; // overwritten later under some conditions
-        const serverName = config['default_server_name'];
-        const hsUrl = config['default_hs_url'];
-        const isUrl = config['default_is_url'];
+        let wkConfig = config["default_server_config"]; // overwritten later under some conditions
+        const serverName = config["default_server_name"];
+        const hsUrl = config["default_hs_url"];
+        const isUrl = config["default_is_url"];
 
-        const incompatibleOptions = [wkConfig, serverName, hsUrl].filter(i => !!i);
+        const incompatibleOptions = [wkConfig, serverName, hsUrl].filter(
+            i => !!i
+        );
         if (incompatibleOptions.length > 1) {
             // noinspection ExceptionCaughtLocallyJS
-            throw newTranslatableError(_td(
-                "Invalid configuration: can only specify one of default_server_config, default_server_name, " +
-                "or default_hs_url.",
-            ));
+            throw newTranslatableError(
+                _td(
+                    "Invalid configuration: can only specify one of default_server_config, default_server_name, " +
+                        "or default_hs_url."
+                )
+            );
         }
         if (incompatibleOptions.length < 1) {
             // noinspection ExceptionCaughtLocallyJS
-            throw newTranslatableError(_td("Invalid configuration: no default server specified."));
+            throw newTranslatableError(
+                _td("Invalid configuration: no default server specified.")
+            );
         }
 
         if (hsUrl) {
-            console.log("Config uses a default_hs_url - constructing a default_server_config using this information");
+            console.log(
+                "Config uses a default_hs_url - constructing a default_server_config using this information"
+            );
             console.warn(
                 "DEPRECATED CONFIG OPTION: In the future, default_hs_url will not be accepted. Please use " +
-                "default_server_config instead.",
+                    "default_server_config instead."
             );
 
             wkConfig = {
                 "m.homeserver": {
-                    "base_url": hsUrl,
-                },
+                    base_url: hsUrl
+                }
             };
             if (isUrl) {
                 wkConfig["m.identity_server"] = {
-                    "base_url": isUrl,
+                    base_url: isUrl
                 };
             }
         }
 
         let discoveryResult = null;
         if (wkConfig) {
-            console.log("Config uses a default_server_config - validating object");
+            console.log(
+                "Config uses a default_server_config - validating object"
+            );
             discoveryResult = await AutoDiscovery.fromDiscoveryConfig(wkConfig);
         }
 
         if (serverName) {
-            console.log("Config uses a default_server_name - doing .well-known lookup");
+            console.log(
+                "Config uses a default_server_name - doing .well-known lookup"
+            );
             console.warn(
                 "DEPRECATED CONFIG OPTION: In the future, default_server_name will not be accepted. Please " +
-                "use default_server_config instead.",
+                    "use default_server_config instead."
             );
             discoveryResult = await AutoDiscovery.findClientConfig(serverName);
         }
 
-        validatedConfig = AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult, true);
+        validatedConfig = AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(
+            serverName,
+            discoveryResult,
+            true
+        );
     } catch (e) {
-        const {hsUrl, isUrl, userId} = Lifecycle.getLocalStorageSessionVars();
+        const { hsUrl, isUrl, userId } = Lifecycle.getLocalStorageSessionVars();
         if (hsUrl && userId) {
             console.error(e);
-            console.warn("A session was found - suppressing config error and using the session's homeserver");
+            console.warn(
+                "A session was found - suppressing config error and using the session's homeserver"
+            );
 
-            console.log("Using pre-existing hsUrl and isUrl: ", {hsUrl, isUrl});
-            validatedConfig = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(hsUrl, isUrl, true);
+            console.log("Using pre-existing hsUrl and isUrl: ", {
+                hsUrl,
+                isUrl
+            });
+            validatedConfig = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(
+                hsUrl,
+                isUrl,
+                true
+            );
         } else {
             // the user is not logged in, so scream
             throw e;
         }
     }
-
 
     validatedConfig.isDefault = true;
 
@@ -537,7 +649,7 @@ async function verifyServerConfig() {
 
     // Add the newly built config to the actual config for use by the app
     console.log("Updating SdkConfig with validated discovery information");
-    SdkConfig.add({"validated_server_config": validatedConfig});
+    SdkConfig.add({ validated_server_config: validatedConfig });
 
     return SdkConfig.get();
 }

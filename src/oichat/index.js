@@ -307,7 +307,7 @@ async function loadApp() {
 
     const acceptInvalidBrowser = window.localStorage && window.localStorage.getItem('mx_accepts_unsupported_browser');
 
-    console.log("Vector starting at "+window.location);
+    console.log("OI Chat starting at "+window.location);
     if (configError) {
         window.matrixChat = ReactDOM.render(<div className="error">
             Unable to load config file: please refresh the page to try again.
