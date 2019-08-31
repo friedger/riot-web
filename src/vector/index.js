@@ -29,6 +29,8 @@ import olmWasmPath from 'olm/olm.wasm';
 
 import './rageshakesetup';
 
+import { checkPendingSignIn } from './oichat';
+
 import React from 'react';
 // add React and ReactPerf to the global namespace, to make them easier to
 // access via the console
@@ -343,6 +345,8 @@ async function loadApp() {
         </div>, document.getElementById('matrixchat'));
     } else if (validBrowser || acceptInvalidBrowser) {
         platform.startUpdater();
+
+        checkPendingSignIn();
 
         // Don't bother loading the app until the config is verified
         verifyServerConfig().then((newConfig) => {
