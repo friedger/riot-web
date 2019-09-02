@@ -216,7 +216,7 @@ export class DIDLogin extends Component {
         this.props.onSubmit(accountName, "", "", password);
     }
 
-    submitUserResponse(challenge, username, address, txid, onSubmit) {
+    submitUserResponse(challenge, username, address, txid) {
         userSession
             .putFile("mxid.json", challenge, { encrypt: false, sign: true })
             .then(() => {
@@ -301,16 +301,6 @@ export class DIDLogin extends Component {
                     disabled={!!this.state.userData}
                 >
                     EOS name (with Scatter)
-                </button>
-                <button
-                    className="mx_Login_submit"
-                    onClick={this.onScatterLogouClick}
-                    disabled={disableForgetBlockstackId}
-                    style={{
-                        margin: "0px 10px"
-                    }}
-                >
-                    Forget EOS name
                 </button>
                 <div>
                     <a
