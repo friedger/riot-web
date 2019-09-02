@@ -1,30 +1,27 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import sdk from "matrix-react-sdk";
 import { UserSession } from "blockstack";
 import { getPublicKeyFromPrivate } from "blockstack/lib/keys";
 import ScatterJS from "scatterjs-core";
 import ScatterEOS from "scatterjs-plugin-eosjs";
 
-const userSession = new UserSession();
+let userSession = new UserSession();
 
 export const checkPendingSignIn = () => {
     if (userSession.isSignInPending()) {
         console.log("blockstack signIn is pending");
 
         const href =
-            window.location.origin +
-            window.location.pathname +
-            window.location.hash;
-        console.log({ href });
+            window.location.origin + window.location.pathname + "#/login";
 
         if (userSession.isUserSignedIn()) {
+            window.location.href = href;
             console.log("blockstack user already signed in");
             return;
         } else {
             userSession.handlePendingSignIn().then(u => {
-                window.location.href =
-                    window.location.origin +
-                    window.location.pathname +
-                    "#/login";
+                window.location.href = href;
             });
             return;
         }
@@ -46,7 +43,12 @@ export function blockstackStateFromUserData(userData) {
             const challenge = challengeObject.challenge;
             console.log("challenge", challenge);
             const address = userData.identityAddress.toLowerCase();
-            return { blockstack: { userData, address }, txid, challenge };
+            return {
+                blockstack: { userData, address },
+                txid,
+                challenge,
+                busy: false
+            };
         });
 }
 
@@ -64,57 +66,10 @@ export function scatterStateFromAccount(identity) {
             return {
                 scatter: { accountName: identity.accounts[0].name },
                 txid,
-                challenge
+                challenge,
+                busy: false
             };
         });
-}
-
-
-export function submitUserResponse(
-    challenge,
-    username,
-    address,
-    txid,
-    onSubmit
-) {
-    userSession
-        .putFile("mxid.json", challenge, { encrypt: false, sign: true })
-        .then(() => {
-            onSubmit(
-                address,
-                "",
-                "",
-                txid + "|" + window.origin + "|" + username
-            );
-        });
-}
-
-export function onBlockstackLoginClick(ev) {
-    ev.preventDefault();
-    userSession.redirectToSignIn(
-        window.location.origin + "/",
-        window.location.origin + "/manifest.json",
-        ["store_write", "publish_data"]
-    );
-}
-
-export function onBlockstackSignoutClick(ev, setState) {
-    userSession.signUserOut();
-    setState({ userData: undefined, address: undefined });
-}
-
-export function onScatterLoginClick(ev) {}
-
-export function submitScatterResponse(
-    accountName,
-    message,
-    signature,
-    txid,
-    onSubmit
-) {
-    const password = txid + "|" + message + "|" + signature;
-    console.log("u/p", { accountName, password }, password.length);
-    onSubmit(accountName, "", "", password);
 }
 
 export class DIDLogin extends Component {
@@ -132,8 +87,7 @@ export class DIDLogin extends Component {
             challenge: undefined
         };
 
-        this.onSubmitForm = this.onSubmitForm.bind(this);
-
+        this.onBlockstackLoginClick = this.onBlockstackLoginClick.bind(this);
         this.onBlockstackSignoutClick = this.onBlockstackSignoutClick.bind(
             this
         );
@@ -149,12 +103,11 @@ export class DIDLogin extends Component {
             const userData = userSession.loadUserData();
             blockstackStateFromUserData(userData).then(state => {
                 this.setState(state);
-                submitUserResponse(
+                this.submitUserResponse(
                     state.challenge,
                     state.blockstack.userData.username,
                     state.blockstack.address,
-                    state.txid,
-                    this.props.onSubmit
+                    state.txid
                 );
             });
         } else if (userSession.isSignInPending()) {
@@ -162,20 +115,20 @@ export class DIDLogin extends Component {
             userSession.handlePendingSignIn().then(userData => {
                 blockstackStateFromUserData(userData).then(state => {
                     this.setState(state);
-                    submitUserResponse(
+                    this.submitUserResponse(
                         state.challenge,
                         state.blockstack.userData.username,
                         state.blockstack.address,
-                        state.txid,
-                        this.props.onSubmit
+                        state.txid
                     );
                 });
             });
         }
-
     }
 
     onBlockstackLoginClick(ev) {
+        this.props.onError(null);
+        userSession = new UserSession();
         userSession.redirectToSignIn(
             window.location.origin + "/",
             window.location.origin + "/manifest.json",
@@ -185,10 +138,12 @@ export class DIDLogin extends Component {
 
     onBlockstackSignoutClick(ev) {
         userSession.signUserOut();
-        this.setState({ userData: undefined, address: undefined });
+        this.setState({ blockstack: undefined });
     }
 
     onScatterLoginClick(ev) {
+        this.props.onError(null);
+        this.setState({ busy: true });
         ScatterJS.plugins(new ScatterEOS());
 
         const network = ScatterJS.Network.fromJson({
@@ -199,8 +154,13 @@ export class DIDLogin extends Component {
             port: 443,
             protocol: "https"
         });
-        ScatterJS.connect("Diri Chat", { network }).then(connected => {
-            if (!connected) return console.error("no scatter");
+        ScatterJS.connect("OI Chat", { network }).then(connected => {
+            if (!connected) {
+                console.error("no scatter");
+                this.props.onError("Scatter not found");
+                this.setState({ busy: false });
+                return;
+            }
             console.log("connected", { connected });
             fetch("https://nodes.get-scatter.com/v1/chain/get_info")
                 .then(response => {
@@ -226,7 +186,7 @@ export class DIDLogin extends Component {
                             .getArbitrarySignature(publicKey, message)
                             .then(signature => {
                                 console.log(signature);
-                                this.scatterStateFromAccount(
+                                scatterStateFromAccount(
                                     ScatterJS.scatter.identity
                                 ).then(
                                     state => {
@@ -241,6 +201,7 @@ export class DIDLogin extends Component {
                                     },
                                     error => {
                                         console.log("error on submit", error);
+                                        this.setState({ busy: false });
                                     }
                                 );
                             });
@@ -255,37 +216,67 @@ export class DIDLogin extends Component {
         this.props.onSubmit(accountName, "", "", password);
     }
 
+    submitUserResponse(challenge, username, address, txid, onSubmit) {
+        userSession
+            .putFile("mxid.json", challenge, { encrypt: false, sign: true })
+            .then(() => {
+                this.props.onSubmit(
+                    address,
+                    "",
+                    "",
+                    txid + "|" + window.origin + "|" + username
+                );
+            });
+    }
+
     render() {
         let username = "";
-        if (this.state && this.state.userData) {
-            username = this.state.userData.username;
+        if (
+            this.state &&
+            this.state.blockstack &&
+            this.state.blockstack.userData
+        ) {
+            username = this.state.blockstack.userData.username;
         }
         let address = "";
-        if (this.state && this.state.address) {
-            address = this.state.address;
+        if (this.state && this.state.blockstack) {
+            address = this.state.blockstack.address;
         }
-        const disableForgetBlockstackId = !this.state.userData;
+        const disableForgetBlockstackId =
+            !this.state.blockstack || !this.state.blockstack.userData;
+
+        const Loader = sdk.getComponent("elements.Spinner");
+        const loader = this.state.busy ? (
+            <div className="mx_Login_loader">
+                <Loader />
+            </div>
+        ) : null;
+
         return (
             <div>
+                Use the digital identity, that you own
+                {loader}
                 <button
-                    onClick={this.onScatterLoginClick}
-                    disabled={!!this.state.userData}
-                >
-                    Use your EOS account name
-                </button>
-                <button
-                    onClick={this.onScatterLogouClick}
-                    disabled={disableForgetBlockstackId}
-                >
-                    Forget EOS account name
-                </button>
-                <button
+                    className="mx_Login_submit"
+                    style={{
+                        backgroundImage: `url("welcome/images/icon-blockstack.svg")`,
+                        backgroundRepeat: `no-repeat`,
+                        backgroundPosition: `10px center`,
+                        margin: "20px 10px 5px 10px"
+                    }}
                     onClick={this.onBlockstackLoginClick}
-                    disabled={!!this.state.userData}
+                    disabled={
+                        !!this.state.blockstack &&
+                        !!this.state.blockstack.userData
+                    }
                 >
-                    Use your Blockstack ID
+                    Blockstack ID
                 </button>
                 <button
+                    className="mx_Login_submit"
+                    style={{
+                        margin: "0px 10px"
+                    }}
                     onClick={this.onBlockstackSignoutClick}
                     disabled={disableForgetBlockstackId}
                 >
@@ -298,19 +289,44 @@ export class DIDLogin extends Component {
                         requires a username!
                     </div>
                 )}
-                {!username && (
-                    <div>
-                        <a href="https://docs.blockstack.org">
-                            Don't have Blockstack yet? Click here
-                        </a>
-                    </div>
-                )}
+                <button
+                    className="mx_Login_submit"
+                    style={{
+                        backgroundImage: `url("welcome/images/icon-eos.svg")`,
+                        backgroundRepeat: `no-repeat`,
+                        backgroundPosition: `10px center`,
+                        margin: "20px 10px 5px 10px"
+                    }}
+                    onClick={this.onScatterLoginClick}
+                    disabled={!!this.state.userData}
+                >
+                    EOS name (with Scatter)
+                </button>
+                <button
+                    className="mx_Login_submit"
+                    onClick={this.onScatterLogouClick}
+                    disabled={disableForgetBlockstackId}
+                    style={{
+                        margin: "0px 10px"
+                    }}
+                >
+                    Forget EOS name
+                </button>
                 <div>
                     <a
                         target="_blank"
                         href="https://matrix.openintents.org/about"
                     >
-                        <button className="mx_Login_blockstack">
+                        <button
+                            className="mx_Login_submit"
+                            style={{
+                                backgroundImage: `url("welcome/images/icon-help.svg")`,
+                                backgroundRepeat: `no-repeat`,
+                                backgroundPosition: `10px center`,
+                                backgroundColor: "#999999",
+                                margin: "20px 10px"
+                            }}
+                        >
                             OI Chat is a matrix service ...
                         </button>
                     </a>
@@ -322,4 +338,5 @@ export class DIDLogin extends Component {
 
 DIDLogin.propTypes = {
     onSubmit: PropTypes.func.isRequired, // fn(username, password)
-}
+    onError: PropTypes.func.isRequired // fn(error)
+};

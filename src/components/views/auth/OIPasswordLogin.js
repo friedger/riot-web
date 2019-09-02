@@ -19,16 +19,15 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import sdk from '../../../index';
-import { _t } from '../../../languageHandler';
-import SdkConfig from '../../../SdkConfig';
-import {ValidatedServerConfig} from "../../../utils/AutoDiscoveryUtils";
+import sdk from 'matrix-react-sdk';
+import { _t, SdkConfig, ValidatedServerConfig} from 'matrix-react-sdk';
 import { DIDLogin } from '../../../vector/oichat';
 
 /**
  * A pure UI component which displays a username/password form.
  */
 export default class PasswordLogin extends React.Component {
+    static replaces = "PasswordLogin";
     static propTypes = {
         onSubmit: PropTypes.func.isRequired, // fn(username, password)
         onError: PropTypes.func,
@@ -371,6 +370,6 @@ export default class PasswordLogin extends React.Component {
     }
 
     render() {
-        return (<DIDLogin onSubmit={this.props.onSubmit} />);
+        return (<DIDLogin onSubmit={this.props.onSubmit} onError={this.props.onError} />);
     }
 }

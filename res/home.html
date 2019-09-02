@@ -1,0 +1,177 @@
+<style type="text/css">
+
+    /* we deliberately inline style here to avoid flash-of-CSS problems, and to avoid
+     * voodoo where we have to set display: none by default
+     */
+
+    .mx_HomePage_header h1 {
+        margin-left: 0px;
+        margin-bottom: 0px;
+        margin-top: 20px;
+        margin-right: 20px;
+        color: #454545;
+    }
+
+    .mx_HomePage_header h2 {
+        margin-left: 0px;
+        margin-top: 5px;
+        margin-bottom: 20px;
+        margin-right: 20px;
+        color: #454545;
+    }
+
+    .mx_HomePage_header h1 a {
+        color: #454545;
+    }
+
+    .mx_HomePage h3 {
+        margin-top: 30px;
+    }
+
+    .mx_HomePage_header {
+        border: 1px solid #76CFA6;
+        background-color: #eaf5f0;
+        border-radius: 5px;
+        align-items: center;
+    }
+
+    .mx_HomePage_col {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .mx_HomePage_toprow {
+        flex-wrap: wrap;
+    }
+
+    .mx_HomePage_row {
+        flex: 1 1 0;
+        margin-right: 20px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .mx_HomePage_logo {
+        margin-top: 20px;
+        margin-left: 40px;
+        margin-right: 40px;
+        margin-bottom: 20px;
+        display: inline;
+        height: 100px;
+    }
+
+    .mx_HomePage_room {
+        cursor: pointer;
+        float: left;
+        text-decoration: none;
+        text-align: center;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 120px;
+    }
+
+    .mx_HomePage_toprow .mx_HomePage_room {
+        width: 64px;
+    }
+
+
+    .mx_HomePage_room .mx_HomePage_icon {
+        border-radius: 50%;
+        width: 64px;
+        height: 64px;
+    }
+
+    .mx_HomePage_room .mx_HomePage_name {
+        display: block;
+    }
+
+    .mx_HomePage_room .mx_HomePage_desc {
+        display: block;
+        font-size: 12px;
+        margin-top: 8px;
+    }
+
+    .mx_HomePage_comment {
+        display: flex;
+        align-items: center;
+        margin-left: 100px;
+        min-height: 64px;
+    }
+
+    .mx_HomePage_container h3::after,
+    .mx_HomePage_container h4::after {
+        content: ":";
+    }
+
+    .mx_HomePage_container {
+        display: block ! important;
+        margin: 20px;
+    }
+
+    .mx_HomePage_container h1,
+    .mx_HomePage_container h2,
+    .mx_HomePage_container h3,
+    .mx_HomePage_container h4 {
+        font-weight: 600;
+    }
+    </style>
+
+    <div class="mx_HomePage_container">
+        <div class="mx_HomePage_col">
+            <a href="https://matrix.openintents.org/about"><img src="welcome/images/logo.svg" class="mx_HomePage_logo"></a>
+            <div>
+                <h1>Welcome to OI Chat</h1>
+            </div>
+        </div>
+        <div class="mx_HomePage_col mx_HomePage_toprow">
+            <div class="mx_HomePage_row">
+                <div>
+                    <h3>Search the room directory</h3>
+                    <a class="mx_HomePage_room" href="#/directory">
+                        <img class="mx_HomePage_icon" src="welcome/images/icons-directories.svg">
+                    </a>
+                    <span class="mx_HomePage_comment">
+                        Lots of rooms already exist in Matrix, linked to existing networks (Slack, IRC, Gitter etc) or independent. Check out the directory!
+                     </span>
+                </div>
+            </div>
+            <div class="mx_HomePage_row">
+                <div>
+                    <h3>Chat with Riot Bot</h3>
+                    <a class="mx_HomePage_room" href="#/user/@riot-bot:matrix.org?action=chat">
+                        <img class="mx_HomePage_icon" src="welcome/images/riot-bot.png">
+                    </a>
+                    <span class="mx_HomePage_comment">
+                        Get started with some tips from Riot Bot!
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <h3>General discussion about Matrix and Blockstack</h3>
+
+        <div class="mx_HomePage_row">
+            <div class="mx_HomePage_room">
+                <a href="#/room/#matrix:matrix.org">
+                    <img class="mx_HomePage_icon" src="welcome/images/matrix.png">
+                    <span class="mx_HomePage_name">Matrix HQ</span>
+                </a>
+                <span class="mx_HomePage_desc">Discussion of all things Matrix!</span>
+            </div>
+            <div class="mx_HomePage_room">
+                <a href="#/room/#blockstack:matrix.org">
+                    <img class="mx_HomePage_icon" src="welcome/images/blockstack.png">
+                    <span class="mx_HomePage_name">#blockstack</span>
+                </a>
+                <span class="mx_HomePage_desc">Blockstack chat</span>
+            </div>
+            <div class="mx_HomePage_room">
+                <a href="#/room/#oichat:openintents.modular.im">
+                    <img class="mx_HomePage_icon" src="welcome/images/logo.svg">
+                    <span class="mx_HomePage_name">#oichat</span>
+                </a>
+                <span class="mx_HomePage_desc">OI Chat, ask for help</span>
+            </div>
+        </div>
+    </div>

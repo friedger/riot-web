@@ -88,6 +88,7 @@ module.exports = function (config) {
             "/img/": "/base/node_modules/matrix-react-sdk/res/img/",
             "/themes/": "/base/res/themes/",
             "/welcome.html": "/base/res/welcome.html",
+            "/home.html": "/base/res/home.html",
             "/welcome/": "/base/res/welcome/",
         },
 
