@@ -14,8 +14,9 @@
     "disable_3pid_login": false,
     "brand": "OI Chat",
     "branding": {
+        "welcomeBackgroundUrl": "themes/riot/img/backgrounds/sky.jpg",
         "authHeaderLogoUrl":"themes/riot/img/logos/oichat.svg",
-        "authFooterLinks":[{"text": "blog", "url": "https://openintents.org/blog"},
+        "authFooterLinks":[{"text": "blog", "url": "http://openintents.org/blog"},
             {"text": "twitter", "url": "https://twitter.com/@openintents"},
             {"text": "github", "url": "https://github.com/friedger/riot-web"}]
     },
