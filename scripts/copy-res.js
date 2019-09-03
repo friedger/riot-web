@@ -53,6 +53,7 @@ const INCLUDE_LANGS = [
 // common parents. Hence, "res/{a,b}/**": the output will be "dest/a/..." and
 // "dest/b/...".
 const COPY_LIST = [
+    ["res/vector-icons/favicon.ico", "webapp"],
     ["res/manifest.json", "webapp"],
     ["res/welcome.html", "webapp"],
     ["res/home.html", "webapp"],
