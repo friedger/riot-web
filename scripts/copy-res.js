@@ -54,6 +54,7 @@ const INCLUDE_LANGS = [
 // "dest/b/...".
 const COPY_LIST = [
     ["res/vector-icons/favicon.ico", "webapp"],
+    ["res/_headers", "webapp"],
     ["res/manifest.json", "webapp"],
     ["res/welcome.html", "webapp"],
     ["res/home.html", "webapp"],
