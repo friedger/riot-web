@@ -35,9 +35,6 @@ import React from 'react';
 // add React and ReactPerf to the global namespace, to make them easier to
 // access via the console
 global.React = React;
-if (process.env.NODE_ENV !== 'production') {
-    global.Perf = require('react-addons-perf');
-}
 
 import './modernizr';
 import ReactDOM from 'react-dom';
@@ -61,8 +58,8 @@ import WebPlatform from './platform/WebPlatform';
 
 import MatrixClientPeg from 'matrix-react-sdk/lib/MatrixClientPeg';
 import SettingsStore from "matrix-react-sdk/lib/settings/SettingsStore";
-import Tinter from 'matrix-react-sdk/lib/Tinter';
 import SdkConfig from "matrix-react-sdk/lib/SdkConfig";
+import {getBaseTheme, setTheme, ThemeWatcher} from "matrix-react-sdk/lib/theme";
 
 import Olm from 'olm';
 
@@ -197,11 +194,6 @@ async function loadApp() {
 
     await loadOlm();
 
-    await loadLanguage();
-
-    const fragparts = parseQsFromFragment(window.location);
-    const params = parseQs(window.location);
-
     // set the platform for react sdk
     if (window.ipcRenderer) {
         console.log("Using Electron platform");
@@ -241,6 +233,12 @@ async function loadApp() {
     // granular settings are loaded correctly and to avoid duplicating the override logic for the theme.
     SdkConfig.put(configJson);
 
+    // Load language after loading config.json so that settingsDefaults.language can be applied
+    await loadLanguage();
+
+    const fragparts = parseQsFromFragment(window.location);
+    const params = parseQs(window.location);
+
     // don't try to redirect to the native apps if we're
     // verifying a 3pid (but after we've loaded the config)
     // or if the user is following a deep link
@@ -259,15 +257,19 @@ async function loadApp() {
     }
 
     // as quickly as we possibly can, set a default theme...
+    // we do this by checking to see if the theme's "base" has loaded first so we can
+    // safely rely on the assets.
     let a;
-    const theme = SettingsStore.getValue("theme");
+    const themeWatcher = new ThemeWatcher();
+    const theme = themeWatcher.getEffectiveTheme();
+    const baseTheme = getBaseTheme(theme);
     for (let i = 0; (a = document.getElementsByTagName("link")[i]); i++) {
         const href = a.getAttribute("href");
         if (!href) continue;
         // shouldn't we be using the 'title' tag rather than the href?
         const match = href.match(/^bundles\/.*\/theme-(.*)\.css$/);
         if (match) {
-            if (match[1] === theme) {
+            if (match[1] === baseTheme) {
                 // remove the disabled flag off the stylesheet
 
                 // Firefox requires setting the attribute to false, so do
@@ -278,21 +280,21 @@ async function loadApp() {
                 // in case the Tinter.tint() in MatrixChat fires before the
                 // CSS has actually loaded (which in practice happens)...
 
-                // This if fixes Tinter.setTheme to not fire on Firefox
+                // This if fixes setTheme to not fire on Firefox
                 // in case it is the first time loading Riot.
                 // `InstallTrigger` is a Object which only exists on Firefox
                 // (it is used for their Plugins) and can be used as a
                 // feature check.
                 // Firefox loads css always before js. This is why we dont use
-                // onload or it's EventListener as thoose will never trigger.
+                // onload or it's EventListener as those will never trigger.
                 if (typeof InstallTrigger !== 'undefined') {
-                    Tinter.setTheme(theme);
+                    setTheme(theme);
                 } else {
                     // FIXME: we should probably block loading the app or even
                     // showing a spinner until the theme is loaded, to avoid
                     // flashes of unstyled content.
                     a.onload = () => {
-                        Tinter.setTheme(theme);
+                        setTheme(theme);
                     };
                 }
             } else {
@@ -338,7 +340,8 @@ async function loadApp() {
 
     const acceptInvalidBrowser = window.localStorage && window.localStorage.getItem('mx_accepts_unsupported_browser');
 
-    console.log("Vector starting at "+window.location);
+    const urlWithoutQuery = window.location.protocol + '//' + window.location.host + window.location.pathname;
+    console.log("Vector starting at " + urlWithoutQuery);
     if (configError) {
         window.matrixChat = ReactDOM.render(<div className="error">
             Unable to load config file: please refresh the page to try again.

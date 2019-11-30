@@ -18,6 +18,8 @@ module.exports = {
         // CSS themes
         "theme-light": "./node_modules/matrix-react-sdk/res/themes/light/css/light.scss",
         "theme-dark": "./node_modules/matrix-react-sdk/res/themes/dark/css/dark.scss",
+        "theme-light-custom": "./node_modules/matrix-react-sdk/res/themes/light-custom/css/light-custom.scss",
+        "theme-dark-custom": "./node_modules/matrix-react-sdk/res/themes/dark-custom/css/dark-custom.scss",
     },
     module: {
         rules: [
@@ -152,7 +154,6 @@ module.exports = {
             // using `npm link` / `yarn link`.
             "react": path.resolve('./node_modules/react'),
             "react-dom": path.resolve('./node_modules/react-dom'),
-            "react-addons-perf": path.resolve('./node_modules/react-addons-perf'),
 
             // same goes for js-sdk
             "matrix-js-sdk": path.resolve('./node_modules/matrix-js-sdk'),

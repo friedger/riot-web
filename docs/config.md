@@ -18,18 +18,14 @@ For a good example, see https://riot.im/develop/config.json.
      `default_is_url`, however these are deprecated. They are maintained for backwards
      compatibility with older configurations. `default_is_url` is respected only
      if `default_hs_url` is used.
-   * The identity server is used for verifying third party identifiers like emails
-     and phone numbers. It is not used to store your password or account information.
-     If not provided, the identity server defaults to vector.im. Currently the only 
-     two public identity servers are https://matrix.org and https://vector.im, however 
-     in future identity servers will be decentralised. In the future it will be possible
-     to disable the identity server functionality.
    * Riot will fail to load if a mix of `default_server_config`, `default_server_name`, or
      `default_hs_url` is specified. When multiple sources are specified, it is unclear
      which should take priority and therefore the application cannot continue.
-1. `features`: Lookup of optional features that may be `enable`d, `disable`d, or exposed to the user
-   in the `labs` section of settings.  The available optional experimental features vary from
-   release to release. The available features are described in [labs.md](labs.md).
+   * As of Riot 1.4.0, identity servers are optional. See [Identity servers](#identity-servers) below.
+1. `features`: Lookup of optional features that may be `enable`d, `disable`d, or
+   exposed to the user in the `labs` section of settings. The available
+   optional experimental features vary from release to release and are [documented](labs.md). The feature flag process is
+   [documented](feature-flags.md) as well.
 1. `showLabsSettings`: Shows the "labs" tab of user settings even when no `features` are enabled
    or present. Useful for getting at settings which may be otherwise hidden.
 1. `brand`: String to pass to your homeserver when configuring email notifications, to let the
@@ -80,6 +76,15 @@ For a good example, see https://riot.im/develop/config.json.
 1. `defaultCountryCode`: The ISO 3166 alpha2 country code to use when showing
    country selectors, like the phone number input on the registration page.
    Defaults to `GB` if the given code is unknown or not provided.
+1. `settingDefaults`:  Defaults for settings that support the `config` level,
+   as an object mapping setting name to value (note that the "theme" setting
+   is special cased to the `default_theme` in the config file).
+1. `disable_custom_urls`: disallow the user to change the
+   default homeserver when signing up or logging in.
+1. `permalinkPrefix`: Used to change the URL that Riot generates permalinks with.
+   By default, this is "https://matrix.to" to generate matrix.to (spec) permalinks.
+   Set this to your Riot instance URL if you run an unfederated server (eg: 
+   "https://riot.example.org").
 
 Note that `index.html` also has an og:image meta tag that is set to an image
 hosted on riot.im. This is the image used if links to your copy of Riot
@@ -90,6 +95,34 @@ it, you can build Riot, but run
 `RIOT_OG_IMAGE_URL="http://example.com/logo.png" yarn build`.
 Alternatively, you can edit the `og:image` meta tag in `index.html` directly
 each time you download a new version of Riot.
+
+Identity servers
+================
+
+The identity server is used for inviting other users to a room via third party
+identifiers like emails and phone numbers. It is not used to store your password
+or account information.
+
+As of Riot 1.4.0, all identity server functions are optional and you are
+prompted to agree to terms before data is sent to the identity server.
+
+Riot will check multiple sources when looking for an identity server to use in
+the following order of preference:
+
+1. The identity server set in the user's account data
+   * For a new user, no value is present in their account data. It is only set
+     if the user visits Settings and manually changes their identity server.
+2. The identity server provided by the `.well-known` lookup that occurred at
+   login
+3. The identity server provided by the Riot config file
+
+If none of these sources have an identity server set, then Riot will prompt the
+user to set an identity server first when attempting to use features that
+require one.
+
+Currently the only two public identity servers are https://vector.im and
+https://matrix.org, however in the future identity servers will be
+decentralised.
 
 Desktop app configuration
 =========================

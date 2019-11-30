@@ -27,9 +27,12 @@ released version of Riot:
 Releases are signed using gpg and the OpenPGP standard, and can be checked against the public key located
 at https://packages.riot.im/riot-release-key.asc.
 
-Note that Chrome does not allow microphone or webcam access for sites served
-over http (except localhost), so for working VoIP you will need to serve Riot
-over https.
+Note that for the security of your chats will need to serve Riot
+over HTTPS. Major browsers also do not allow you to use VoIP/video
+chats over HTTP, as WebRTC is only usable over HTTPS.
+There are some exceptions like when using localhost, which is
+considered a [secure context](https://developer.mozilla.org/docs/Web/Security/Secure_Contexts)
+and thus allowed.
 
 To install Riot as a desktop application, see [Running as a desktop
 app](#running-as-a-desktop-app) below.
@@ -70,26 +73,11 @@ guide](https://yarnpkg.com/docs/install/) if you do not have it already.
 1. Clone the repo: `git clone https://github.com/vector-im/riot-web.git`.
 1. Switch to the riot-web directory: `cd riot-web`.
 1. Install the prerequisites: `yarn install`.
-1. If you're using the `develop` branch then it is recommended to set up a proper
-   development environment ("Setting up a dev environment" below) however one can
-   install the develop versions of the dependencies instead:
-   ```bash
-   scripts/fetch-develop.deps.sh
-   ```
-   Whenever you git pull on `riot-web` you will also probably need to force an update
-   to these dependencies - the simplest way is to re-run the script, but you can also
-   manually update and rebuild them:
-   ```bash
-   cd matrix-js-sdk
-   git pull
-   yarn install # re-run to pull in any new dependencies
-   cd ../matrix-react-sdk
-   git pull
-   yarn install
-   ```
-   Or just use https://riot.im/develop - the continuous integration release of the
-   develop branch. (Note that we don't reference the develop versions in git directly
-   due to https://github.com/npm/npm/issues/3055.)
+   *  If you're using the `develop` branch, then it is recommended to set up a
+      proper development environment (see [Setting up a dev
+      environment](#setting-up-a-dev-environment) below). Alternatively, you
+      can use https://riot.im/develop - the continuous integration release of
+      the develop branch.
 1. Configure the app by copying `config.sample.json` to `config.json` and
    modifying it. See the [configuration docs](docs/config.md) for details.
 1. `yarn dist` to build a tarball to deploy. Untaring this file will give
@@ -159,13 +147,13 @@ override the desktop app's default settings if desired.
 Running from Docker
 ===================
 
-The Docker image can be used to serve riot-web as a web server. The easiest way to use 
+The Docker image can be used to serve riot-web as a web server. The easiest way to use
 it is to use the prebuilt image:
 ```bash
 docker run -p 80:80 vectorim/riot-web
-``` 
+```
 
-To supply your own custom `config.json`, map a volume to `/app/config.json`. For example, 
+To supply your own custom `config.json`, map a volume to `/app/config.json`. For example,
 if your custom config was located at `/etc/riot-web/config.json` then your Docker command
 would be:
 ```bash
@@ -287,6 +275,9 @@ bundle.css.map   116 kB       0  [emitted]  main
    and rebuilds source files when they change. This development server also
    disables caching, so do NOT use it in production.
 
+Configure the app by copying `config.sample.json` to `config.json` and
+modifying it. See the [configuration docs](docs/config.md) for details.
+
 Open http://127.0.0.1:8080/ in your browser to see your newly built Riot.
 
 ___
@@ -319,6 +310,10 @@ You can also tell karma to run the tests in a loop (every time the source
 changes), in an instance of Chrome on your desktop, with `yarn
 test-multi`. This also gives you the option of running the tests in 'debug'
 mode, which is useful for stepping through the tests in the developer tools.
+
+### End-to-End tests
+
+See [matrix-react-sdk](https://github.com/matrix-org/matrix-react-sdk/#end-to-end-tests) how to run the end-to-end tests.
 
 Translations
 ============
