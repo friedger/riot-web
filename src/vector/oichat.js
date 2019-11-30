@@ -289,6 +289,19 @@ export class DIDLogin extends Component {
                         requires a username!
                     </div>
                 )}
+                <button
+                    className="mx_Login_submit"
+                    style={{
+                        backgroundImage: `url("welcome/images/icon-eos.svg")`,
+                        backgroundRepeat: `no-repeat`,
+                        backgroundPosition: `10px center`,
+                        margin: "20px 10px 5px 10px"
+                    }}
+                    onClick={this.onScatterLoginClick}
+                    disabled={!!this.state.userData}
+                >
+                    EOS name (with Scatter)
+                </button>
                 <div>
                     <a
                         target="_blank"
