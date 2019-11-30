@@ -1,11 +1,12 @@
 import React from "react";
+import createReactClass from 'create-react-class';
 import sdk from "matrix-react-sdk";
 import { _t } from "matrix-react-sdk/lib/languageHandler";
 
-module.exports = React.createClass({
+module.exports = createReactClass({
     displayName: "OIRegistration",
     statics: {
-        replaces: "Registration"
+        replaces: "Registration",
     },
 
     render: function() {
