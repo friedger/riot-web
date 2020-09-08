@@ -28,7 +28,6 @@
         text-align: center;
         padding: 25px 35px;
         color: #2e2f32;
-        background:#ffffff9b;
     }
 
     .mx_Logo {
@@ -96,17 +95,8 @@
         color: #2e2f32 !important;
     }
 
-    .mx_ButtonHeadline {
-        margin-bottom: 14px;
-    }
-
     .mx_ButtonLabel {
         margin-left: 20px;
-    }
-
-    .mx_ButtonWrapperText {
-        font-size: 13px;
-        margin-bottom: 10px;
     }
 
     .mx_Header_title {
@@ -127,7 +117,7 @@
     }
 
     .mx_ButtonCreateAccount {
-        background-color: #03b381;
+        background-color: #0dbd8b;
         color: white !important;
     }
 
@@ -159,8 +149,21 @@ we don't have an account and should hide them. No account == no guest account ei
         display: none;
     }
 
-    .mx_HelpSection {
-        margin: 10px;
+    .mx_ButtonRow.mx_WelcomePage_guestFunctions {
+        margin-top: 20px;
+    }
+    .mx_ButtonRow.mx_WelcomePage_guestFunctions > div {
+        margin: 0 auto;
+    }
+
+    @media only screen and (max-width: 480px) {
+        .mx_ButtonRow {
+            flex-direction: column;
+        }
+
+        .mx_ButtonRow > * {
+            margin: 0 0 10px 0;
+        }
     }
 </style>
 
@@ -172,15 +175,9 @@ we don't have an account and should hide them. No account == no guest account ei
     >
         <img src="welcome/images/logo.svg" alt="" class="mx_Logo" />
     </a>
-    <h1 class="mx_Header_title">Liberate your communication
-        </h1>
-    <h2>
-        Communicate the way you want with OI Chat
-    </h2>
-    <div>
-        A universal secure chat app
-        entirely under your control.
-    </div>
+    <h1 class="mx_Header_title">Liberate your communication</h1>
+    <h2>Communicate the way you want with OI Chat</h2>
+    <div>A universal secure chat app entirely under your control.</div>
     <div class="mx_ButtonGroup">
         <div class="mx_ButtonRow">
             <a
@@ -197,21 +194,11 @@ we don't have an account and should hide them. No account == no guest account ei
         <!-- BEGIN Ansible: Remove these lines when guest access is disabled -->
         <div class="mx_ButtonRow mx_WelcomePage_guestFunctions">
             <div>
-                <div class="mx_ButtonWrapperText">_t("Need help?")</div>
-                <a
-                    href="#/user/@riot-bot:matrix.org?action=chat"
-                    class="mx_ButtonParent mx_SecondaryButton mx_Button_iconHelp"
-                >
-                    <div class="mx_ButtonLabel">_t("Chat with Riot Bot")</div>
-                </a>
-            </div>
-            <div>
-                <div class="mx_ButtonWrapperText">_t("Explore rooms")</div>
                 <a
                     href="#/directory"
                     class="mx_ButtonParent mx_SecondaryButton mx_Button_iconRoomDirectory"
                 >
-                    <div class="mx_ButtonLabel">_t("Room Directory")</div>
+                    <div class="mx_ButtonLabel">_t("Explore rooms")</div>
                 </a>
             </div>
         </div>
@@ -219,7 +206,7 @@ we don't have an account and should hide them. No account == no guest account ei
     </div>
     <div class="mx_HelpSection">
         Connect to more than 7 million users
-        <br/>
+        <br />
         <br />
         Build on top of open source app <b>Riot</b>
         <br />

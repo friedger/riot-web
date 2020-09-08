@@ -1,5 +1,5 @@
 # Builder
-FROM node:10-alpine as builder
+FROM node:12 as builder
 
 # Support custom branches of the react-sdk and js-sdk. This also helps us build
 # images of riot-web develop.
@@ -9,23 +9,32 @@ ARG REACT_SDK_BRANCH="master"
 ARG JS_SDK_REPO="https://github.com/matrix-org/matrix-js-sdk.git"
 ARG JS_SDK_BRANCH="master"
 
-RUN apk add --no-cache git dos2unix
+RUN apt-get update && apt-get install -y git dos2unix \
+# These packages are required for building Canvas on architectures like Arm
+# See https://www.npmjs.com/package/canvas#compiling
+  build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
 
 WORKDIR /src
 
 COPY . /src
-RUN dos2unix /src/scripts/docker-link-repos.sh && sh /src/scripts/docker-link-repos.sh
+RUN dos2unix /src/scripts/docker-link-repos.sh && bash /src/scripts/docker-link-repos.sh
 RUN yarn --network-timeout=100000 install
 RUN yarn build
 
 # Copy the config now so that we don't create another layer in the app image
 RUN cp /src/config.sample.json /src/webapp/config.json
 
+# Ensure we populate the version file
+RUN dos2unix /src/scripts/docker-write-version.sh && bash /src/scripts/docker-write-version.sh
+
 
 # App
 FROM nginx:alpine
 
 COPY --from=builder /src/webapp /app
+
+# Insert wasm type into Nginx mime.types file so they load correctly.
+RUN sed -i '3i\ \ \ \ application/wasm wasm\;' /etc/nginx/mime.types
 
 RUN rm -rf /usr/share/nginx/html \
  && ln -s /app /usr/share/nginx/html

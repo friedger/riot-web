@@ -16,16 +16,15 @@ limitations under the License.
 */
 
 import React from 'react';
-import SdkConfig from 'matrix-react-sdk/lib/SdkConfig';
+import SdkConfig from 'matrix-react-sdk/src/SdkConfig';
+import { _t } from 'matrix-react-sdk/src/languageHandler';
 
-import { _t } from 'matrix-react-sdk/lib/languageHandler';
-
-module.exports = () => {
+const VectorAuthFooter = () => {
     const brandingConfig = SdkConfig.get().branding;
     let links = [
-        {"text": "blog", "url": "https://medium.com/@RiotChat"},
-        {"text": "twitter", "url": "https://twitter.com/@RiotChat"},
-        {"text": "github", "url": "https://github.com/vector-im/riot-web"},
+        {"text": "Blog", "url": "https://element.io/blog"},
+        {"text": "Twitter", "url": "https://twitter.com/element_hq"},
+        {"text": "GitHub", "url": "https://github.com/vector-im/riot-web"},
     ];
 
     if (brandingConfig && brandingConfig.authFooterLinks) {
@@ -35,7 +34,7 @@ module.exports = () => {
     const authFooterLinks = [];
     for (const linkEntry of links) {
         authFooterLinks.push(
-            <a href={linkEntry.url} key={linkEntry.text} target="_blank" rel="noopener">
+            <a href={linkEntry.url} key={linkEntry.text} target="_blank" rel="noreferrer noopener">
                 {linkEntry.text}
             </a>,
         );
@@ -44,8 +43,11 @@ module.exports = () => {
     return (
         <div className="mx_AuthFooter">
             {authFooterLinks}
-            <a href="https://matrix.org" target="_blank" rel="noopener">{ _t('powered by Matrix') }</a>
+            <a href="https://matrix.org" target="_blank" rel="noreferrer noopener">{ _t('Powered by Matrix') }</a>
         </div>
     );
 };
-module.exports.replaces = 'AuthFooter';
+
+VectorAuthFooter.replaces = 'AuthFooter';
+
+export default VectorAuthFooter;

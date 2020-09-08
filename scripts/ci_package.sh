@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Runs package.sh setting the version to git hashes of the riot-web,
+# Runs package.sh setting the version to git hashes of the element-web,
 # react-sdk & js-sdk checkouts, for the case where these dependencies
 # are git checkouts.
 
@@ -14,4 +14,4 @@ JSSDK_SHA=$(cd node_modules/matrix-js-sdk; git rev-parse --short=12 HEAD)
 
 VECTOR_SHA=$(git rev-parse --short=12 HEAD) # use the ACTUAL SHA rather than assume develop
 
-DIST_VERSION=$VECTOR_SHA-react-$REACT_SHA-js-$JSSDK_SHA scripts/package.sh -d
+CI_PACKAGE=true DIST_VERSION=$VECTOR_SHA-react-$REACT_SHA-js-$JSSDK_SHA scripts/package.sh -d
